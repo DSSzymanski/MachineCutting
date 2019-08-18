@@ -11,6 +11,10 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="600"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
 
         <Border BorderThickness="0, 0, 1, 0" BorderBrush="Black">
             <StackPanel>
@@ -24,10 +28,17 @@
                 <Button x:Name="cutWBttn" Content="CutMoveWest" FontSize="14"/>
             </StackPanel>
         </Border>
-        <Popup x:Name="MaterialPopup" Placement="Mouse">
-            <Grid>
-                <TextBlock Text="My Popup"/>
-            </Grid>
+        <Popup x:Name="InputPopup" Placement="Center" AllowsTransparency="True" VerticalOffset="-100" Width="200" Height="100">
+            <Border BorderBrush="Black" BorderThickness="1 1 1 1">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock x:Name="InputPrompt" HorizontalAlignment="Center"/>
+                    <Grid>
+                        
+
+                    </Grid>
+                    <Button x:Name="closePopup" Content="close" Click="CloseClick" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
         </Popup>
 
     </Grid>
