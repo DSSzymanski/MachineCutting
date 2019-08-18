@@ -11,5 +11,24 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="600"/>
         </Grid.ColumnDefinitions>
+
+        <Border BorderThickness="0, 0, 1, 0" BorderBrush="Black">
+            <StackPanel>
+                <Label Content="ADD INSTRUCTION" HorizontalAlignment="Center"/>
+                <Border BorderThickness="1, 0, 0, 0" BorderBrush="Black"/>
+                <Button x:Name="materialDimBttn" Click="SetDimClick" Content="SetMaterialBlockDimensions" FontSize="14"/>
+                <Button x:Name="locationBttn" Content="SetCutLocation" FontSize="14"/>
+                <Button x:Name="cutNBttn" Content="CutMoveNorth" FontSize="14"/>
+                <Button x:Name="cutSBttn" Content="CutMoveSouth" FontSize="14"/>
+                <Button x:Name="cutEBttn" Content="CutMoveEast" FontSize="14"/>
+                <Button x:Name="cutWBttn" Content="CutMoveWest" FontSize="14"/>
+            </StackPanel>
+        </Border>
+        <Popup x:Name="MaterialPopup" Placement="Mouse">
+            <Grid>
+                <TextBlock Text="My Popup"/>
+            </Grid>
+        </Popup>
+
     </Grid>
 </Window>

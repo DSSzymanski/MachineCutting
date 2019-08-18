@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controler.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="Cut.cs" />
     <Compile Include="MainWindow.xaml.cs">

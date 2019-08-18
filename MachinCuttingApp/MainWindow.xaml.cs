@@ -23,6 +23,24 @@ namespace MachinCuttingApp
         public MainWindow()
         {
             InitializeComponent();
+            
         }
+
+        private void SetDimClick(object sender, RoutedEventArgs e)
+        {
+            MaterialPopup.IsOpen = true;
+        }
+
+        private void SetLocClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CutNClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
     }
 }
