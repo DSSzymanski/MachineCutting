@@ -20,23 +20,15 @@ namespace MachinCuttingApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Controler mainControl;
         public MainWindow()
         {
             InitializeComponent();
-            mainControl = new Controler();
+            
         }
 
         private void SetDimClick(object sender, RoutedEventArgs e)
         {
-            InputPrompt.Text = "Set Material Dimensions:";
-            inputText.Content = "X:";
-            InputPopup.IsOpen = true; 
-        }
-
-        private void CloseClick(object sender, RoutedEventArgs e)
-        {
-            InputPopup.IsOpen = false;
+            MaterialPopup.IsOpen = true;
         }
 
         private void SetLocClick(object sender, RoutedEventArgs e)
