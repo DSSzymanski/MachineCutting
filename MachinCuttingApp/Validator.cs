@@ -6,8 +6,17 @@ using System.Threading.Tasks;
 
 namespace MachinCuttingApp
 {
-    static class Validator
+    public static class Validator
     {
+        public static int VALID = 0;
+        public static int INVALID_PARAMS = 1;
+        public static string[] Parser(string input)
+        {
+            string[] separator = { " ", "\'", "\"", "/", "\\", ".", "\r", "\n", ";" };
+            string[] parsed = input.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            
+            return parsed;
+        }
         /*
          * Takes a string of input and validates
          * to ensure input is integer value
@@ -28,14 +37,14 @@ namespace MachinCuttingApp
         }
         public static bool lowerBoundCheck(int lowerBound, int checkVal)
         {
-            if (checkVal <= lowerBound) { return false; }
+            if (checkVal < lowerBound) { return false; }
             return true;
         }
 
         public static bool boundsCheck(int lowerBound, int upperBound, int checkVal)
         {
-            if (checkVal >= upperBound || checkVal <= lowerBound) { return false; }
-            return true;
+            if (checkVal <= upperBound && checkVal >= lowerBound) { return true; }
+            return false;
         }
     }
 }

@@ -5,30 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MachinCuttingApp"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="MainWindow" Height="600" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="600"/>
         </Grid.ColumnDefinitions>
-
-        <Border BorderThickness="0, 0, 1, 0" BorderBrush="Black">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        
+        <Border BorderThickness="0, 0, 1, 1" BorderBrush="Black">
             <StackPanel>
                 <Label Content="ADD INSTRUCTION" HorizontalAlignment="Center"/>
                 <Border BorderThickness="1, 0, 0, 0" BorderBrush="Black"/>
                 <Button x:Name="materialDimBttn" Click="SetDimClick" Content="SetMaterialBlockDimensions" FontSize="14"/>
-                <Button x:Name="locationBttn" Content="SetCutLocation" FontSize="14"/>
-                <Button x:Name="cutNBttn" Content="CutMoveNorth" FontSize="14"/>
-                <Button x:Name="cutSBttn" Content="CutMoveSouth" FontSize="14"/>
-                <Button x:Name="cutEBttn" Content="CutMoveEast" FontSize="14"/>
-                <Button x:Name="cutWBttn" Content="CutMoveWest" FontSize="14"/>
+                <Button x:Name="locationBttn" Click="SetLocClick" Content="SetCutLocation" FontSize="14"/>
+                <Button x:Name="cutNBttn" Click="CutNClick" Content="CutMoveNorth" FontSize="14"/>
+                <Button x:Name="cutSBttn" Click="CutSClick" Content="CutMoveSouth" FontSize="14"/>
+                <Button x:Name="cutEBttn" Click="CutEClick"  Content="CutMoveEast" FontSize="14"/>
+                <Button x:Name="cutWBttn" Click="CutWClick" Content="CutMoveWest" FontSize="14"/>
             </StackPanel>
         </Border>
-        <Popup x:Name="MaterialPopup" Placement="Mouse">
-            <Grid>
-                <TextBlock Text="My Popup"/>
-            </Grid>
-        </Popup>
-
+        <TextBlock x:Name="currentPosition" Grid.Row="1" Grid.Column="0"/>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="AddInstructionButton" Content="Add" Click="AddInstructionClick" Grid.Column="0"/>
+            <TextBox x:Name="InputText" Grid.Column="1"/>
+        </Grid>
+        
     </Grid>
 </Window>
