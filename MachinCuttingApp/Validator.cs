@@ -8,8 +8,8 @@ namespace MachinCuttingApp
 {
     public static class Validator
     {
-        public static int VALID = 0;
-        public static int INVALID_PARAMS = 1;
+        public static readonly int VALID = 0;
+        public static readonly int INVALID_PARAMS = 1;
         public static string[] Parser(string input)
         {
             string[] separator = { " ", "\'", "\"", "/", "\\", ".", "\r", "\n", ";" };
