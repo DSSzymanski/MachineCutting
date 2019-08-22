@@ -20,8 +20,8 @@ namespace MachinCuttingApp
         public static readonly int FAILED_PARAM_LENGTH = -3;
         public static readonly int FAILED_INSTRUCTION_NOT_FOUND = -4;
         public static readonly int PASS = 1;
-        private int[] materialSize { get; }
-        private int[] currPos { get; }
+        private int[] materialSize { get; set; }
+        private int[] currPos { get; set; }
         private List<string> instructionList = new List<string>();
 
         public Controler()
@@ -88,6 +88,18 @@ namespace MachinCuttingApp
                 }
             }
             return result;
+        }
+
+        public void RemoveInstruction(int index)
+        {
+            List<string> instructions = new List<string>(instructionList);
+            instructions.RemoveAt(index);
+            instructionList.Clear();
+            currPos[0] = 0;
+            currPos[1] = 0;
+            materialSize[0] = 0;
+            materialSize[1] = 0;
+            for (int i = 0; i < instructions.Count; i++){ testInstruction(instructions[i]); }
         }
         
         private int TestSetMaterialBlockDimensions(string x, string y)
@@ -166,28 +178,7 @@ namespace MachinCuttingApp
             }
             return PASS;
         }
-        /*
-        public int runInstruction(string input)
-        {
-            string[] parsedInput = Validator.Parser(input);
-            if (parsedInput[0] == DimensionString)
-            {
-                return SetMaterialBlockDimensions(parsedInput[1], parsedInput[2]);
-            }
-            else if (parsedInput[0] == LocationString)
-            {
-                if (parsedInput.Length != 3) { return FAILED_PARAM_LENGTH; }
-                return SetCutLocation(parsedInput[1], parsedInput[2]);
-            }
-
-            else if (parsedInput[0] == CutNorth)
-            {
-                if (parsedInput.Length != 2) { return FAILED_PARAM_LENGTH; }
-                return CutMoveNorth(parsedInput[1]);
-            }
-            else { return FAILED_INSTRUCTION_NOT_FOUND; }
-        }
-        */
+       
         public void SetMaterialBlockDimensions(string x, string y)
         {
             int validatedX = Validator.validateInput(x);

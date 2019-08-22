@@ -27,10 +27,14 @@
                 <Button x:Name="cutSBttn" Click="CutSClick" Content="CutMoveSouth" FontSize="14"/>
                 <Button x:Name="cutEBttn" Click="CutEClick"  Content="CutMoveEast" FontSize="14"/>
                 <Button x:Name="cutWBttn" Click="CutWClick" Content="CutMoveWest" FontSize="14"/>
+                <Label Content="REMOVE INSTRUCTION" HorizontalAlignment="Center"/>
+                <ListBox x:Name="instructionListBox" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                         HorizontalContentAlignment="Center" Height="352" FontSize="10"/>
+                <Button x:Name="removeBttn" Click="removeInstructionClick" Content="Remove" FontSize="14"/>
             </StackPanel>
         </Border>
         <Canvas Grid.Column="1" Grid.Row="0" x:Name="drawArea" Width="500" Height="500" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 10, 0"/>
-        <TextBlock x:Name="currentPosition" Grid.Row="1" Grid.Column="0"/>
+        <TextBlock x:Name="currentPosition" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"/>
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"/>

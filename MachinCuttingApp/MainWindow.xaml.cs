@@ -25,6 +25,7 @@ namespace MachinCuttingApp
         public MainWindow()
         {
             InitializeComponent();
+            SetCurrentLocation();
         }
 
         private void AddInstructionClick(object sender, RoutedEventArgs e)
@@ -35,11 +36,31 @@ namespace MachinCuttingApp
             mainControl.testInstruction(input);
             SetCurrentLocation();
             Draw();
+            fillInstrutionListbox(mainControl.getInstructions());
+        }
+
+        private void removeInstructionClick(object sender, RoutedEventArgs e)
+        {
+            if (instructionListBox.SelectedIndex == -1) { return; }
+            int index = instructionListBox.SelectedIndex;
+            mainControl.RemoveInstruction(index);
+            Draw();
+            SetCurrentLocation();
+            fillInstrutionListbox(mainControl.getInstructions());
+        }
+
+        private void fillInstrutionListbox(List<string> input)
+        {
+            instructionListBox.Items.Clear();
+            foreach (string instruction in input)
+            {
+                instructionListBox.Items.Add(instruction);
+            }
         }
 
         private void SetCurrentLocation()
         {
-            currentPosition.Text = mainControl.locationString() + mainControl.materialString();
+            currentPosition.Text = $"Location: {mainControl.locationString()}";
         }
         private void Draw()
         {
@@ -141,34 +162,50 @@ namespace MachinCuttingApp
                     currPos[1] = l.Y2;
                 }
             }
+        
+            //transform canvas
+            drawArea.RenderTransformOrigin = new Point(0.5, 0.5);
+            drawArea.RenderTransform = new ScaleTransform(scaleX: 1, scaleY:-1);
+
+            //scale objects to fit canvas
+            ScaleTransform scale = new ScaleTransform(scaleX: Math.Min(scaleX, scaleY), 
+                scaleY: Math.Min(scaleX, scaleY));
+            materialDimension.RenderTransform = scale;
+
+            foreach (Line l in drawArea.Children.OfType<Line>()) { l.RenderTransform = scale; }
 
             //Crosshairs for current location
             Line l1 = new Line();
-            l1.X1 = currPos[0] - 2;
-            l1.Y1 = currPos[1] - 2;
-            l1.X2 = currPos[0] + 2;
-            l1.Y2 = currPos[1] + 2;
+            l1.X1 = currPos[0];
+            l1.Y1 = currPos[1];
+            l1.X2 = currPos[0];
+            l1.Y2 = currPos[1];
             l1.Stroke = Brushes.Red;
-            l1.StrokeThickness = 0.25;
+            l1.StrokeThickness = 1.0;
 
             Line l2 = new Line();
-            l2.X1 = currPos[0] - 2;
-            l2.Y1 = currPos[1] + 2;
-            l2.X2 = currPos[0] + 2;
-            l2.Y2 = currPos[1] - 2;
+            l2.X1 = currPos[0];
+            l2.Y1 = currPos[1];
+            l2.X2 = currPos[0];
+            l2.Y2 = currPos[1];
             l2.Stroke = Brushes.Red;
-            l2.StrokeThickness = 0.25;
+            l2.StrokeThickness = 1.0;
+
+            l1.RenderTransform = scale;
+            l2.RenderTransform = scale;
+
+            l1.X1 -= 2;
+            l1.Y1 -= 2;
+            l1.X2 += 2;
+            l1.Y2 += 2;
+
+            l2.X1 -= 2;
+            l2.Y1 += 2;
+            l2.X2 += 2;
+            l2.Y2 -= 2;
 
             drawArea.Children.Add(l1);
             drawArea.Children.Add(l2);
-
-            //scale to fit canvas
-            ScaleTransform scale = new ScaleTransform(scaleX: Math.Min(scaleX, scaleY), scaleY: Math.Min(scaleX, scaleY));
-            materialDimension.RenderTransform = scale;
-            foreach (Line l in drawArea.Children.OfType<Line>())
-            {
-                l.RenderTransform = scale;
-            }
         }
         //sets button click to fill text box and focus
         private void SetDimClick(object sender, RoutedEventArgs e)
