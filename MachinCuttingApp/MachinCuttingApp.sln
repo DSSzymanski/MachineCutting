@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachinCuttingApp", "MachinCuttingApp.csproj", "{9B2126F1-EE70-424A-99CA-8AC3E440E42B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineCuttingApp", "MachineCuttingApp.csproj", "{9B2126F1-EE70-424A-99CA-8AC3E440E42B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MachineCuttingUnitTests", "..\MachineCuttingUnitTests\MachineCuttingUnitTests.csproj", "{9A870BA1-7175-4BE7-A438-95DCF66AC139}"
 EndProject

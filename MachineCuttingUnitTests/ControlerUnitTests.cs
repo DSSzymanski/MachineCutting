@@ -11,24 +11,24 @@ namespace MachineCuttingUnitTests
         public void SetMaterialBlockTests()
         {
             //set up controller
-            Controler C = new Controler();
+            Controller C = new Controller();
 
             //set up test strings
-            string stringFailBoundsCheck1 = $"{Controler.DimensionString} 20 -30";
-            string stringFailBoundsCheck2 = $"{Controler.DimensionString} -30 1";
-            string stringFailParamsLength = $"{Controler.DimensionString}";
-            string stringFailParamsLength2 = $"{Controler.DimensionString} 20 20 20";
-            string stringFailNotFoundNoSpace = $"{Controler.DimensionString}20 20";
+            string stringFailBoundsCheck1 = $"{Controller.DimensionString} 20 -30";
+            string stringFailBoundsCheck2 = $"{Controller.DimensionString} -30 1";
+            string stringFailParamsLength = $"{Controller.DimensionString}";
+            string stringFailParamsLength2 = $"{Controller.DimensionString} 20 20 20";
+            string stringFailNotFoundNoSpace = $"{Controller.DimensionString}20 20";
             string stringFailNotFound = "I will return instruction not found";
-            string stringPass = $"{Controler.DimensionString} 20 20";
+            string stringPass = $"{Controller.DimensionString} 20 20";
             
             //set up arrays
             string[] inputs = { stringFailBoundsCheck1, stringFailBoundsCheck2, stringFailParamsLength,
                 stringFailParamsLength2, stringFailNotFoundNoSpace, stringFailNotFound, stringPass};
             int[] outputs = new int[inputs.Length];
-            int[] intendedOutputs = { Controler.FAILED_BOUNDS_CHECK, Controler.FAILED_BOUNDS_CHECK,
-                Controler.FAILED_PARAM_LENGTH, Controler.FAILED_PARAM_LENGTH, Controler.FAILED_INSTRUCTION_NOT_FOUND,
-                Controler.FAILED_INSTRUCTION_NOT_FOUND, Controler.PASS};
+            int[] intendedOutputs = { Controller.FAILED_BOUNDS_CHECK, Controller.FAILED_BOUNDS_CHECK,
+                Controller.FAILED_PARAM_LENGTH, Controller.FAILED_PARAM_LENGTH, Controller.FAILED_INSTRUCTION_NOT_FOUND,
+                Controller.FAILED_INSTRUCTION_NOT_FOUND, Controller.PASS};
             int[] commands = new int[inputs.Length];
             int[] intendedCommands = { 0, 0, 0, 0, 0, 0, 1 };
 
@@ -44,29 +44,29 @@ namespace MachineCuttingUnitTests
         public void SetCutLocationTests()
         {
             //set up controller
-            Controler C = new Controler();
+            Controller C = new Controller();
             C.SetMaterialBlockDimensions("20", "20");
 
             //test setup
-            string stringFailBoundsCheck1 = $"{Controler.LocationString} 20 -30";
-            string stringFailBoundsCheck2 = $"{Controler.LocationString} -30 1";
-            string stringFailBoundsCheck3 = $"{Controler.LocationString} 30 10";
-            string stringFailBoundsCheck4 = $"{Controler.LocationString} 10 30";
-            string stringFailParamsLength = $"{Controler.LocationString}";
-            string stringFailParamsLength2 = $"{Controler.LocationString} 20 20 20";
-            string stringFailNotFoundNoSpace = $"{Controler.LocationString}20 20";
+            string stringFailBoundsCheck1 = $"{Controller.LocationString} 20 -30";
+            string stringFailBoundsCheck2 = $"{Controller.LocationString} -30 1";
+            string stringFailBoundsCheck3 = $"{Controller.LocationString} 30 10";
+            string stringFailBoundsCheck4 = $"{Controller.LocationString} 10 30";
+            string stringFailParamsLength = $"{Controller.LocationString}";
+            string stringFailParamsLength2 = $"{Controller.LocationString} 20 20 20";
+            string stringFailNotFoundNoSpace = $"{Controller.LocationString}20 20";
             string stringFailNotFound = "I will return instruction not found";
-            string stringPass = $"{Controler.LocationString} 10 10";
+            string stringPass = $"{Controller.LocationString} 10 10";
             
             //set up arrays for tests
             string[] inputs = { stringFailBoundsCheck1, stringFailBoundsCheck2,
                 stringFailBoundsCheck3, stringFailBoundsCheck4, stringFailParamsLength,
                 stringFailParamsLength2, stringFailNotFoundNoSpace, stringFailNotFound, stringPass};
             int[] outputs = new int[inputs.Length];
-            int[] intendedOutputs = { Controler.FAILED_BOUNDS_CHECK, Controler.FAILED_BOUNDS_CHECK,
-                Controler.FAILED_BOUNDS_CHECK, Controler.FAILED_BOUNDS_CHECK, Controler.FAILED_PARAM_LENGTH,
-                Controler.FAILED_PARAM_LENGTH, Controler.FAILED_INSTRUCTION_NOT_FOUND,
-                Controler.FAILED_INSTRUCTION_NOT_FOUND, Controler.PASS};
+            int[] intendedOutputs = { Controller.FAILED_BOUNDS_CHECK, Controller.FAILED_BOUNDS_CHECK,
+                Controller.FAILED_BOUNDS_CHECK, Controller.FAILED_BOUNDS_CHECK, Controller.FAILED_PARAM_LENGTH,
+                Controller.FAILED_PARAM_LENGTH, Controller.FAILED_INSTRUCTION_NOT_FOUND,
+                Controller.FAILED_INSTRUCTION_NOT_FOUND, Controller.PASS};
             int[] commands = new int[inputs.Length];
             int[] intendedCommands = { 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
@@ -81,22 +81,22 @@ namespace MachineCuttingUnitTests
         public void TestCutNorthTests()
         {
             //set up controler
-            Controler C = new Controler();
+            Controller C = new Controller();
             C.SetMaterialBlockDimensions("10", "10");
 
             //test setup
-            string stringFailBoundsCheck1 = $"{Controler.CutNorth} 20";
-            string stringFailBoundsCheck2 = $"{Controler.CutNorth} -30";
-            string stringFailParamsLength = $"{Controler.CutNorth}";
-            string stringFailParamsLength2 = $"{Controler.CutNorth} 20 20";
-            string stringPass = $"{Controler.CutNorth} 5";
+            string stringFailBoundsCheck1 = $"{Controller.CutNorth} 20";
+            string stringFailBoundsCheck2 = $"{Controller.CutNorth} -30";
+            string stringFailParamsLength = $"{Controller.CutNorth}";
+            string stringFailParamsLength2 = $"{Controller.CutNorth} 20 20";
+            string stringPass = $"{Controller.CutNorth} 5";
 
             //set up arrays for tests
             string[] inputs = {stringFailBoundsCheck1, stringFailBoundsCheck2,
                 stringFailParamsLength, stringFailParamsLength2, stringPass};
             int[] outputs = new int[inputs.Length];
-            int[] intendedOutputs = { Controler.FAILED_BOUNDS_CHECK, Controler.FAILED_BOUNDS_CHECK,
-                Controler.FAILED_PARAM_LENGTH, Controler.FAILED_PARAM_LENGTH, Controler.PASS};
+            int[] intendedOutputs = { Controller.FAILED_BOUNDS_CHECK, Controller.FAILED_BOUNDS_CHECK,
+                Controller.FAILED_PARAM_LENGTH, Controller.FAILED_PARAM_LENGTH, Controller.PASS};
             int[] commands = new int[inputs.Length];
             int[] intendedCommands = { 0, 0, 0, 0, 1 };
 
@@ -111,23 +111,23 @@ namespace MachineCuttingUnitTests
         public void TestCutSouthTests()
         {
             //set up controler
-            Controler C = new Controler();
+            Controller C = new Controller();
             C.SetMaterialBlockDimensions("10", "10");
             C.SetCutLocation("5", "5");
 
             //test setup
-            string stringFailBoundsCheck1 = $"{Controler.CutSouth} 20";
-            string stringFailBoundsCheck2 = $"{Controler.CutSouth} -30";
-            string stringFailParamsLength = $"{Controler.CutSouth}";
-            string stringFailParamsLength2 = $"{Controler.CutSouth} 20 20";
-            string stringPass = $"{Controler.CutSouth} 5";
+            string stringFailBoundsCheck1 = $"{Controller.CutSouth} 20";
+            string stringFailBoundsCheck2 = $"{Controller.CutSouth} -30";
+            string stringFailParamsLength = $"{Controller.CutSouth}";
+            string stringFailParamsLength2 = $"{Controller.CutSouth} 20 20";
+            string stringPass = $"{Controller.CutSouth} 5";
 
             //set up arrays for tests
             string[] inputs = {stringFailBoundsCheck1, stringFailBoundsCheck2,
                 stringFailParamsLength, stringFailParamsLength2, stringPass};
             int[] outputs = new int[inputs.Length];
-            int[] intendedOutputs = { Controler.FAILED_BOUNDS_CHECK, Controler.FAILED_BOUNDS_CHECK,
-                Controler.FAILED_PARAM_LENGTH, Controler.FAILED_PARAM_LENGTH, Controler.PASS};
+            int[] intendedOutputs = { Controller.FAILED_BOUNDS_CHECK, Controller.FAILED_BOUNDS_CHECK,
+                Controller.FAILED_PARAM_LENGTH, Controller.FAILED_PARAM_LENGTH, Controller.PASS};
             int[] commands = new int[inputs.Length];
             int[] intendedCommands = { 0, 0, 0, 0, 1 };
 
@@ -141,23 +141,23 @@ namespace MachineCuttingUnitTests
         public void TestCutEastTests()
         {
             //set up controler
-            Controler C = new Controler();
+            Controller C = new Controller();
             C.SetMaterialBlockDimensions("10", "10");
             C.SetCutLocation("5", "5");
 
             //test setup
-            string stringFailBoundsCheck1 = $"{Controler.CutEast} 20";
-            string stringFailBoundsCheck2 = $"{Controler.CutEast} -30";
-            string stringFailParamsLength = $"{Controler.CutEast}";
-            string stringFailParamsLength2 = $"{Controler.CutEast} 20 20";
-            string stringPass = $"{Controler.CutEast} 5";
+            string stringFailBoundsCheck1 = $"{Controller.CutEast} 20";
+            string stringFailBoundsCheck2 = $"{Controller.CutEast} -30";
+            string stringFailParamsLength = $"{Controller.CutEast}";
+            string stringFailParamsLength2 = $"{Controller.CutEast} 20 20";
+            string stringPass = $"{Controller.CutEast} 5";
 
             //set up arrays for tests
             string[] inputs = {stringFailBoundsCheck1, stringFailBoundsCheck2,
                 stringFailParamsLength, stringFailParamsLength2, stringPass};
             int[] outputs = new int[inputs.Length];
-            int[] intendedOutputs = { Controler.FAILED_BOUNDS_CHECK, Controler.FAILED_BOUNDS_CHECK,
-                Controler.FAILED_PARAM_LENGTH, Controler.FAILED_PARAM_LENGTH, Controler.PASS};
+            int[] intendedOutputs = { Controller.FAILED_BOUNDS_CHECK, Controller.FAILED_BOUNDS_CHECK,
+                Controller.FAILED_PARAM_LENGTH, Controller.FAILED_PARAM_LENGTH, Controller.PASS};
             int[] commands = new int[inputs.Length];
             int[] intendedCommands = { 0, 0, 0, 0, 1 };
 
@@ -171,23 +171,23 @@ namespace MachineCuttingUnitTests
         public void TestCutWestTests()
         {
             //set up controler
-            Controler C = new Controler();
+            Controller C = new Controller();
             C.SetMaterialBlockDimensions("10", "10");
             C.SetCutLocation("5", "5");
 
             //test setup
-            string stringFailBoundsCheck1 = $"{Controler.CutWest} 20";
-            string stringFailBoundsCheck2 = $"{Controler.CutWest} -30";
-            string stringFailParamsLength = $"{Controler.CutWest}";
-            string stringFailParamsLength2 = $"{Controler.CutWest} 20 20";
-            string stringPass = $"{Controler.CutWest} 5";
+            string stringFailBoundsCheck1 = $"{Controller.CutWest} 20";
+            string stringFailBoundsCheck2 = $"{Controller.CutWest} -30";
+            string stringFailParamsLength = $"{Controller.CutWest}";
+            string stringFailParamsLength2 = $"{Controller.CutWest} 20 20";
+            string stringPass = $"{Controller.CutWest} 5";
 
             //set up arrays for tests
             string[] inputs = {stringFailBoundsCheck1, stringFailBoundsCheck2,
                 stringFailParamsLength, stringFailParamsLength2, stringPass};
             int[] outputs = new int[inputs.Length];
-            int[] intendedOutputs = { Controler.FAILED_BOUNDS_CHECK, Controler.FAILED_BOUNDS_CHECK,
-                Controler.FAILED_PARAM_LENGTH, Controler.FAILED_PARAM_LENGTH, Controler.PASS};
+            int[] intendedOutputs = { Controller.FAILED_BOUNDS_CHECK, Controller.FAILED_BOUNDS_CHECK,
+                Controller.FAILED_PARAM_LENGTH, Controller.FAILED_PARAM_LENGTH, Controller.PASS};
             int[] commands = new int[inputs.Length];
             int[] intendedCommands = { 0, 0, 0, 0, 1 };
 

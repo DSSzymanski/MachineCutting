@@ -20,7 +20,7 @@ namespace MachinCuttingApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Controler mainControl = new Controler();
+        private Controller mainControl = new Controller();
 
         public MainWindow()
         {
@@ -34,22 +34,22 @@ namespace MachinCuttingApp
         //opens error popup for detail instruction page
         private void DetailErrorHandler(int error)
         {
-            if (error == Controler.FAILED_NOT_AN_INT)
+            if (error == Controller.FAILED_NOT_AN_INT)
             {
                 DetailErrors.IsOpen = true;
                 DetailErrorText.Text = "Input must be an integer(s) greater than zero.";
             }
-            else if (error == Controler.FAILED_PARAM_LENGTH)
+            else if (error == Controller.FAILED_PARAM_LENGTH)
             {
                 DetailErrors.IsOpen = true;
                 DetailErrorText.Text = "Incorrect parameter length. See details tab for instruction parameters.";
             }
-            else if (error == Controler.FAILED_INSTRUCTION_NOT_FOUND)
+            else if (error == Controller.FAILED_INSTRUCTION_NOT_FOUND)
             {
                 DetailErrors.IsOpen = true;
                 DetailErrorText.Text = "Invalid instruction. See details tab for instruction list.";
             }
-            else if (error == Controler.FAILED_BOUNDS_CHECK)
+            else if (error == Controller.FAILED_BOUNDS_CHECK)
             {
                 DetailErrors.IsOpen = true;
                 DetailErrorText.Text = "Input failed bounds check. Please enter values that fall within the material size.";
@@ -59,22 +59,22 @@ namespace MachinCuttingApp
         //opens error popup for main page
         private void ErrorHandler(int error)
         {
-            if (error == Controler.FAILED_NOT_AN_INT)
+            if (error == Controller.FAILED_NOT_AN_INT)
             {
                 Errors.IsOpen = true;
                 ErrorText.Text = "Input must be an integer(s) greater than zero.";
             }
-            else if(error == Controler.FAILED_PARAM_LENGTH)
+            else if(error == Controller.FAILED_PARAM_LENGTH)
             {
                 Errors.IsOpen = true;
                 ErrorText.Text = "Incorrect parameter length. See details tab for instruction parameters.";
             }
-            else if(error == Controler.FAILED_INSTRUCTION_NOT_FOUND)
+            else if(error == Controller.FAILED_INSTRUCTION_NOT_FOUND)
             {
                 Errors.IsOpen = true;
                 ErrorText.Text = "Invalid instruction. See details tab for instruction list.";
             }
-            else if(error == Controler.FAILED_BOUNDS_CHECK)
+            else if(error == Controller.FAILED_BOUNDS_CHECK)
             {
                 Errors.IsOpen = true;
                 ErrorText.Text = "Input failed bounds check. Please enter values that fall within the material size.";
@@ -88,42 +88,42 @@ namespace MachinCuttingApp
          */
         private void SMBDDetailClick(object sender, RoutedEventArgs e)
         {
-            string instruction = $"{Controler.DimensionString} {SMBDXInput.Text} {SMBDYInput.Text}";
+            string instruction = $"{Controller.DimensionString} {SMBDXInput.Text} {SMBDYInput.Text}";
             int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void SCLDetailClick(object sender, RoutedEventArgs e)
         {
-            string instruction = $"{Controler.LocationString} {SCLXInput.Text} {SCLYInput.Text}";
+            string instruction = $"{Controller.LocationString} {SCLXInput.Text} {SCLYInput.Text}";
             int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void CMNDetailClick(object sender, RoutedEventArgs e)
         {
-            string instruction = $"{Controler.CutNorth} {CMNLInput.Text}";
+            string instruction = $"{Controller.CutNorth} {CMNLInput.Text}";
             int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void CMSDetailClick(object sender, RoutedEventArgs e)
         {
-            string instruction = $"{Controler.CutSouth} {CMSLInput.Text}";
+            string instruction = $"{Controller.CutSouth} {CMSLInput.Text}";
             int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void CMEDetailClick(object sender, RoutedEventArgs e)
         {
-            string instruction = $"{Controler.CutEast} {CMELInput.Text}";
+            string instruction = $"{Controller.CutEast} {CMELInput.Text}";
             int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void CMWDetailClick(object sender, RoutedEventArgs e)
         {
-            string instruction = $"{Controler.CutWest} {CMWLInput.Text}";
+            string instruction = $"{Controller.CutWest} {CMWLInput.Text}";
             int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
@@ -134,24 +134,24 @@ namespace MachinCuttingApp
         //initialized detail page
         private void SetupDetailWindow()
         {
-            SMBDTextBlock.Text = Controler.DimensionString;
+            SMBDTextBlock.Text = Controller.DimensionString;
             SMBDDescriptionBlock.Text = "Sets size of material block on screen (screen will scale). " +
-                $"Parameters of length and width. Called as: {Controler.DimensionString} Length Width";
-            SCLTextBlock.Text = Controler.LocationString;
+                $"Parameters of length and width. Called as: {Controller.DimensionString} Length Width";
+            SCLTextBlock.Text = Controller.LocationString;
             SCLDescriptionBlock.Text = "Sets the current position to one given. Parameters of X and Y." +
-                $"Called as: {Controler.LocationString} X Y";
-            CMNTextBlock.Text = Controler.CutNorth;
+                $"Called as: {Controller.LocationString} X Y";
+            CMNTextBlock.Text = Controller.CutNorth;
             CMNDescriptionBlock.Text = "Adds a cut North a certain amount given by the parameter entered. " +
-                $"Parameter of length. Called as: {Controler.CutNorth} Length";
-            CMSTextBlock.Text = Controler.CutSouth;
+                $"Parameter of length. Called as: {Controller.CutNorth} Length";
+            CMSTextBlock.Text = Controller.CutSouth;
             CMSDescriptionBlock.Text = "Adds a cut South a certain amount given by the parameter entered. " +
-                $"Parameter of length. Called as: {Controler.CutSouth} Length";
-            CMETextBlock.Text = Controler.CutEast;
+                $"Parameter of length. Called as: {Controller.CutSouth} Length";
+            CMETextBlock.Text = Controller.CutEast;
             CMEDescriptionBlock.Text = "Adds a cut East a certain amount given by the parameter entered. " +
-                $"Parameter of length. Called as: {Controler.CutEast} Length";
-            CMWTextBlock.Text = Controler.CutWest;
+                $"Parameter of length. Called as: {Controller.CutEast} Length";
+            CMWTextBlock.Text = Controller.CutWest;
             CMWDescriptionBlock.Text = "Adds a cut West a certain amount given by the parameter entered. " +
-                $"Parameter of length. Called as: {Controler.CutWest} Length";
+                $"Parameter of length. Called as: {Controller.CutWest} Length";
             ResetInputs();
         }
         
@@ -235,19 +235,19 @@ namespace MachinCuttingApp
             for (int i = 0 ; i < instructions.Count; i++)
             {
                 string[] parsed = Validator.Parser(instructions[i]);
-                if (parsed[0] == Controler.DimensionString)
+                if (parsed[0] == Controller.DimensionString)
                 {
                     materialDimension.Width = Validator.ValidateInput(parsed[1]);
                     materialDimension.Height = Validator.ValidateInput(parsed[2]);
                     scaleX = windowSizeX / materialDimension.Width;
                     scaleY = windowSizeY / materialDimension.Height;
                 }
-                else if (parsed[0] == Controler.LocationString)
+                else if (parsed[0] == Controller.LocationString)
                 {
                     currPos[0] = Validator.ValidateInput(parsed[1]);
                     currPos[1] = Validator.ValidateInput(parsed[2]);
                 }
-                else if (parsed[0] == Controler.CutNorth)
+                else if (parsed[0] == Controller.CutNorth)
                 {
                     Line l = new Line
                     {
@@ -262,7 +262,7 @@ namespace MachinCuttingApp
                     currPos[0] = l.X2;
                     currPos[1] = l.Y2;
                 }
-                else if (parsed[0] == Controler.CutSouth)
+                else if (parsed[0] == Controller.CutSouth)
                 {
                     Line l = new Line
                     {
@@ -277,7 +277,7 @@ namespace MachinCuttingApp
                     currPos[0] = l.X2;
                     currPos[1] = l.Y2;
                 }
-                else if (parsed[0] == Controler.CutEast)
+                else if (parsed[0] == Controller.CutEast)
                 {
                     Line l = new Line
                     {
@@ -292,7 +292,7 @@ namespace MachinCuttingApp
                     currPos[0] = l.X2;
                     currPos[1] = l.Y2;
                 }
-                else if (parsed[0] == Controler.CutWest)
+                else if (parsed[0] == Controller.CutWest)
                 {
                     Line l = new Line
                     {
@@ -363,42 +363,42 @@ namespace MachinCuttingApp
         //sets button click to fill text box and focus
         private void SetDimClick(object sender, RoutedEventArgs e)
         {
-            InputText.Text = Controler.DimensionString + " ";
+            InputText.Text = Controller.DimensionString + " ";
             Keyboard.Focus(InputText);
             InputText.SelectionStart = InputText.Text.Length;
         }
         //sets button click to fill text box and focus
         private void SetLocClick(object sender, RoutedEventArgs e)
         {
-            InputText.Text = Controler.LocationString + " ";
+            InputText.Text = Controller.LocationString + " ";
             Keyboard.Focus(InputText);
             InputText.SelectionStart = InputText.Text.Length;
         }
         //sets button click to fill text box and focus
         private void CutNClick(object sender, RoutedEventArgs e)
         {
-            InputText.Text = Controler.CutNorth + " ";
+            InputText.Text = Controller.CutNorth + " ";
             Keyboard.Focus(InputText);
             InputText.SelectionStart = InputText.Text.Length;
         }
         //sets button click to fill text box and focus
         private void CutSClick(object sender, RoutedEventArgs e)
         {
-            InputText.Text = Controler.CutSouth + " ";
+            InputText.Text = Controller.CutSouth + " ";
             Keyboard.Focus(InputText);
             InputText.SelectionStart = InputText.Text.Length;
         }
         //sets button click to fill text box and focus
         private void CutEClick(object sender, RoutedEventArgs e)
         {
-            InputText.Text = Controler.CutEast + " ";
+            InputText.Text = Controller.CutEast + " ";
             Keyboard.Focus(InputText);
             InputText.SelectionStart = InputText.Text.Length;
         }
         //sets button click to fill text box and focus
         private void CutWClick(object sender, RoutedEventArgs e)
         {
-            InputText.Text = Controler.CutWest + " ";
+            InputText.Text = Controller.CutWest + " ";
             Keyboard.Focus(InputText);
             InputText.SelectionStart = InputText.Text.Length;
         }

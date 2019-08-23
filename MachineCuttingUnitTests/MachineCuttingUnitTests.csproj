@@ -57,9 +57,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MachinCuttingApp\MachinCuttingApp.csproj">
+    <ProjectReference Include="..\MachinCuttingApp\MachineCuttingApp.csproj">
       <Project>{9b2126f1-ee70-424a-99ca-8ac3e440e42b}</Project>
-      <Name>MachinCuttingApp</Name>
+      <Name>MachineCuttingApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

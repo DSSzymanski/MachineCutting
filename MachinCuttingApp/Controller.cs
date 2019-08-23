@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MachinCuttingApp
 {
-    public class Controler
+    public class Controller
     {
         //constants
         public static readonly string DimensionString = "SetMaterialBlockDimensions";
@@ -26,7 +26,7 @@ namespace MachinCuttingApp
         private int[] currPos { get; set; }
         private List<string> instructionList = new List<string>();
 
-        public Controler()
+        public Controller()
         {
             materialSize = new int[2] { 0, 0 };
             currPos = new int[2] { 0, 0 };
