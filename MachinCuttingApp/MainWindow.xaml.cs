@@ -26,17 +26,145 @@ namespace MachinCuttingApp
         {
             InitializeComponent();
             SetCurrentLocation();
+            SetupDetailWindow();
         }
 
+        private void DetailErrorHandler(int error)
+        {
+            if (error == Controler.FAILED_NOT_AN_INT)
+            {
+                DetailErrors.IsOpen = true;
+                DetailErrorText.Text = "Input must be an integer(s) greater than zero.";
+            }
+            else if (error == Controler.FAILED_PARAM_LENGTH)
+            {
+                DetailErrors.IsOpen = true;
+                DetailErrorText.Text = "Incorrect parameter length. See details tab for instruction parameters.";
+            }
+            else if (error == Controler.FAILED_INSTRUCTION_NOT_FOUND)
+            {
+                DetailErrors.IsOpen = true;
+                DetailErrorText.Text = "Invalid instruction. See details tab for instruction list.";
+            }
+            else if (error == Controler.FAILED_BOUNDS_CHECK)
+            {
+                DetailErrors.IsOpen = true;
+                DetailErrorText.Text = "Input failed bounds check. Please enter values that fall within the material size.";
+            }
+        }
+
+        private void ErrorHandler(int error)
+        {
+            if (error == Controler.FAILED_NOT_AN_INT)
+            {
+                Errors.IsOpen = true;
+                ErrorText.Text = "Input must be an integer(s) greater than zero.";
+            }
+            else if(error == Controler.FAILED_PARAM_LENGTH)
+            {
+                Errors.IsOpen = true;
+                ErrorText.Text = "Incorrect parameter length. See details tab for instruction parameters.";
+            }
+            else if(error == Controler.FAILED_INSTRUCTION_NOT_FOUND)
+            {
+                Errors.IsOpen = true;
+                ErrorText.Text = "Invalid instruction. See details tab for instruction list.";
+            }
+            else if(error == Controler.FAILED_BOUNDS_CHECK)
+            {
+                Errors.IsOpen = true;
+                ErrorText.Text = "Input failed bounds check. Please enter values that fall within the material size.";
+            }
+        }
+        private void ClosePopupClick(object sender, RoutedEventArgs e) { Errors.IsOpen = false; }
+        private void CloseDetailPopupClick(object sender, RoutedEventArgs e) { DetailErrors.IsOpen = false; }
+
+        private void SMBDDetailClick(object sender, RoutedEventArgs e)
+        {
+            string instruction = $"{Controler.DimensionString} {SMBDXInput.Text} {SMBDYInput.Text}";
+            int error = mainControl.testInstruction(instruction);
+            ResetInputs();
+            DetailErrorHandler(error);
+        }
+        private void SCLDetailClick(object sender, RoutedEventArgs e)
+        {
+            string instruction = $"{Controler.LocationString} {SCLXInput.Text} {SCLYInput.Text}";
+            int error = mainControl.testInstruction(instruction);
+            ResetInputs();
+            DetailErrorHandler(error);
+        }
+        private void CMNDetailClick(object sender, RoutedEventArgs e)
+        {
+            string instruction = $"{Controler.CutNorth} {CMNLInput.Text}";
+            int error = mainControl.testInstruction(instruction);
+            ResetInputs();
+            DetailErrorHandler(error);
+        }
+        private void CMSDetailClick(object sender, RoutedEventArgs e)
+        {
+            string instruction = $"{Controler.CutSouth} {CMSLInput.Text}";
+            int error = mainControl.testInstruction(instruction);
+            ResetInputs();
+            DetailErrorHandler(error);
+        }
+        private void CMEDetailClick(object sender, RoutedEventArgs e)
+        {
+            string instruction = $"{Controler.CutEast} {CMELInput.Text}";
+            int error = mainControl.testInstruction(instruction);
+            ResetInputs();
+            DetailErrorHandler(error);
+        }
+        private void CMWDetailClick(object sender, RoutedEventArgs e)
+        {
+            string instruction = $"{Controler.CutWest} {CMWLInput.Text}";
+            int error = mainControl.testInstruction(instruction);
+            ResetInputs();
+            DetailErrorHandler(error);
+        }
+        private void TabUpdate(object sender, RoutedEventArgs e) { Draw(); }
+        private void SetupDetailWindow()
+        {
+            SMBDTextBlock.Text = Controler.DimensionString;
+            SMBDDescriptionBlock.Text = "Sets size of material block on screen (screen will scale). " +
+                $"Parameters of length and width. Called as: {Controler.DimensionString} Length Width";
+            SCLTextBlock.Text = Controler.LocationString;
+            SCLDescriptionBlock.Text = "Sets the current position to one given. Parameters of X and Y." +
+                $"Called as: {Controler.LocationString} X Y";
+            CMNTextBlock.Text = Controler.CutNorth;
+            CMNDescriptionBlock.Text = "Adds a cut North a certain amount given by the parameter entered. " +
+                $"Parameter of length. Called as: {Controler.CutNorth} Length";
+            CMSTextBlock.Text = Controler.CutSouth;
+            CMSDescriptionBlock.Text = "Adds a cut South a certain amount given by the parameter entered. " +
+                $"Parameter of length. Called as: {Controler.CutSouth} Length";
+            CMETextBlock.Text = Controler.CutEast;
+            CMEDescriptionBlock.Text = "Adds a cut East a certain amount given by the parameter entered. " +
+                $"Parameter of length. Called as: {Controler.CutEast} Length";
+            CMWTextBlock.Text = Controler.CutWest;
+            CMWDescriptionBlock.Text = "Adds a cut West a certain amount given by the parameter entered. " +
+                $"Parameter of length. Called as: {Controler.CutWest} Length";
+            ResetInputs();
+        }
+        private void ResetInputs()
+        {
+            SMBDXInput.Text = "0"; //SetMaterialBlockDimensions
+            SMBDYInput.Text = "0"; //SetMaterialBlockDimensions
+            SCLXInput.Text = "0"; //SetCutLength
+            SCLYInput.Text = "0"; //SetCutLength
+            CMNLInput.Text = "0"; //CutMoveNorth
+            CMSLInput.Text = "0"; //CutMoveSouth
+            CMELInput.Text = "0"; //CutMoveEast
+            CMWLInput.Text = "0"; //CutMoveWest
+        }
         private void AddInstructionClick(object sender, RoutedEventArgs e)
         {
             if (InputText.Text == "") { Draw(); return; }
             string input = InputText.Text;
             InputText.Text = "";
-            mainControl.testInstruction(input);
+            int error = mainControl.testInstruction(input);
             SetCurrentLocation();
             Draw();
             fillInstrutionListbox(mainControl.getInstructions());
+            ErrorHandler(error);
         }
 
         private void removeInstructionClick(object sender, RoutedEventArgs e)
@@ -176,33 +304,27 @@ namespace MachinCuttingApp
 
             //Crosshairs for current location
             Line l1 = new Line();
-            l1.X1 = currPos[0];
-            l1.Y1 = currPos[1];
-            l1.X2 = currPos[0];
-            l1.Y2 = currPos[1];
+            l1.X1 = currPos[0]+4;
+            l1.Y1 = currPos[1]+4;
+            l1.X2 = currPos[0]-4;
+            l1.Y2 = currPos[1]-4;
             l1.Stroke = Brushes.Red;
             l1.StrokeThickness = 1.0;
 
             Line l2 = new Line();
-            l2.X1 = currPos[0];
-            l2.Y1 = currPos[1];
-            l2.X2 = currPos[0];
-            l2.Y2 = currPos[1];
+            l2.X1 = currPos[0]-4;
+            l2.Y1 = currPos[1]+4;
+            l2.X2 = currPos[0]+4;
+            l2.Y2 = currPos[1]-4;
             l2.Stroke = Brushes.Red;
             l2.StrokeThickness = 1.0;
 
-            l1.RenderTransform = scale;
-            l2.RenderTransform = scale;
+            double xloc = currPos[0] * scaleX;
+            double yloc = currPos[1] * scaleY;
+            TranslateTransform crosshairScale = new TranslateTransform(xloc-currPos[0], yloc-currPos[1] );
 
-            l1.X1 -= 2;
-            l1.Y1 -= 2;
-            l1.X2 += 2;
-            l1.Y2 += 2;
-
-            l2.X1 -= 2;
-            l2.Y1 += 2;
-            l2.X2 += 2;
-            l2.Y2 -= 2;
+            l1.RenderTransform = crosshairScale;
+            l2.RenderTransform = crosshairScale;
 
             drawArea.Children.Add(l1);
             drawArea.Children.Add(l2);
