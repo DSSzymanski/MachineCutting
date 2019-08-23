@@ -41,7 +41,7 @@ namespace MachineCuttingUnitTests
             int[] outputs = new int[inputs.Length];
             int[] intendedOutputs = { 1, -1, -1 };
 
-            for (int i = 0; i < inputs.Length; i++) { outputs[i] = Validator.validateInput(inputs[i]); }
+            for (int i = 0; i < inputs.Length; i++) { outputs[i] = Validator.ValidateInput(inputs[i]); }
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
         }
@@ -56,7 +56,7 @@ namespace MachineCuttingUnitTests
             bool[] outputs = new bool[tests.Length];
             bool[] intendedOutputs = { true, true };
 
-            for (int i = 0; i < tests.Length; i++) { outputs[i] = Validator.lowerBoundCheck(tests[i], val); }
+            for (int i = 0; i < tests.Length; i++) { outputs[i] = Validator.LowerBoundCheck(tests[i], val); }
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
         }
@@ -70,7 +70,7 @@ namespace MachineCuttingUnitTests
             bool[] outputs = new bool[tests.Length];
             bool[] intendedOutputs = { false };
 
-            for (int i = 0; i < tests.Length; i++) { outputs[i] = Validator.lowerBoundCheck(tests[i], val); }
+            for (int i = 0; i < tests.Length; i++) { outputs[i] = Validator.LowerBoundCheck(tests[i], val); }
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
         }
@@ -88,14 +88,14 @@ namespace MachineCuttingUnitTests
             bool[] outputs = new bool[8];
             bool[] intendedOutputs = { true, true, true, false, false, false, false, false };
 
-            outputs[0] = Validator.boundsCheck(lowerPass, upperPass, val); //pass
-            outputs[1] = Validator.boundsCheck(lowerPass, equal, val); //pass
-            outputs[2] = Validator.boundsCheck(equal, upperPass, val); //pass
-            outputs[3] = Validator.boundsCheck(lowerFail, upperPass, val); //fail
-            outputs[4] = Validator.boundsCheck(lowerFail, equal, val); //fail
-            outputs[5] = Validator.boundsCheck(lowerPass, upperFail, val); //fail
-            outputs[6] = Validator.boundsCheck(equal, upperFail, val); //fail
-            outputs[7] = Validator.boundsCheck(lowerFail, upperFail, val); //fail
+            outputs[0] = Validator.BoundsCheck(lowerPass, upperPass, val); //pass
+            outputs[1] = Validator.BoundsCheck(lowerPass, equal, val); //pass
+            outputs[2] = Validator.BoundsCheck(equal, upperPass, val); //pass
+            outputs[3] = Validator.BoundsCheck(lowerFail, upperPass, val); //fail
+            outputs[4] = Validator.BoundsCheck(lowerFail, equal, val); //fail
+            outputs[5] = Validator.BoundsCheck(lowerPass, upperFail, val); //fail
+            outputs[6] = Validator.BoundsCheck(equal, upperFail, val); //fail
+            outputs[7] = Validator.BoundsCheck(lowerFail, upperFail, val); //fail
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
         }

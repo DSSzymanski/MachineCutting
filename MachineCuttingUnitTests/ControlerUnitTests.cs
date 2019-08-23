@@ -33,7 +33,7 @@ namespace MachineCuttingUnitTests
             int[] intendedCommands = { 0, 0, 0, 0, 0, 0, 1 };
 
             //run tests
-            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.testInstruction(inputs[i]); commands[i] = C.instructionLength(); }
+            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.TestInstruction(inputs[i]); commands[i] = C.InstructionLength(); }
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
             Assert.AreEqual(commands[6], intendedCommands[6]);
@@ -71,7 +71,7 @@ namespace MachineCuttingUnitTests
             int[] intendedCommands = { 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
             //run tests
-            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.testInstruction(inputs[i]); commands[i] = C.instructionLength(); }
+            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.TestInstruction(inputs[i]); commands[i] = C.InstructionLength(); }
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
             CollectionAssert.AreEqual(commands, intendedCommands);
@@ -101,7 +101,7 @@ namespace MachineCuttingUnitTests
             int[] intendedCommands = { 0, 0, 0, 0, 1 };
 
             //run tests
-            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.testInstruction(inputs[i]); commands[i] = C.instructionLength(); }
+            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.TestInstruction(inputs[i]); commands[i] = C.InstructionLength(); }
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
             CollectionAssert.AreEqual(commands, intendedCommands);
@@ -132,7 +132,7 @@ namespace MachineCuttingUnitTests
             int[] intendedCommands = { 0, 0, 0, 0, 1 };
 
             //run tests
-            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.testInstruction(inputs[i]); commands[i] = C.instructionLength(); }
+            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.TestInstruction(inputs[i]); commands[i] = C.InstructionLength(); }
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
             CollectionAssert.AreEqual(commands, intendedCommands);
@@ -162,7 +162,7 @@ namespace MachineCuttingUnitTests
             int[] intendedCommands = { 0, 0, 0, 0, 1 };
 
             //run tests
-            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.testInstruction(inputs[i]); commands[i] = C.instructionLength(); }
+            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.TestInstruction(inputs[i]); commands[i] = C.InstructionLength(); }
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
             CollectionAssert.AreEqual(commands, intendedCommands);
@@ -192,7 +192,7 @@ namespace MachineCuttingUnitTests
             int[] intendedCommands = { 0, 0, 0, 0, 1 };
 
             //run tests
-            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.testInstruction(inputs[i]); commands[i] = C.instructionLength(); }
+            for (int i = 0; i < inputs.Length; i++) { outputs[i] = C.TestInstruction(inputs[i]); commands[i] = C.InstructionLength(); }
 
             CollectionAssert.AreEqual(outputs, intendedOutputs);
             CollectionAssert.AreEqual(commands, intendedCommands);

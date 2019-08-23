@@ -25,10 +25,13 @@ namespace MachinCuttingApp
         public MainWindow()
         {
             InitializeComponent();
+            //Write current cut location
             SetCurrentLocation();
+            //initialize values on detail page
             SetupDetailWindow();
         }
 
+        //opens error popup for detail instruction page
         private void DetailErrorHandler(int error)
         {
             if (error == Controler.FAILED_NOT_AN_INT)
@@ -53,6 +56,7 @@ namespace MachinCuttingApp
             }
         }
 
+        //opens error popup for main page
         private void ErrorHandler(int error)
         {
             if (error == Controler.FAILED_NOT_AN_INT)
@@ -79,49 +83,55 @@ namespace MachinCuttingApp
         private void ClosePopupClick(object sender, RoutedEventArgs e) { Errors.IsOpen = false; }
         private void CloseDetailPopupClick(object sender, RoutedEventArgs e) { DetailErrors.IsOpen = false; }
 
+        /*Detail click below will create a string based on which button is clicked 
+         * on the detail page, then run the instruction, reset the page, and raise errors if any.
+         */
         private void SMBDDetailClick(object sender, RoutedEventArgs e)
         {
             string instruction = $"{Controler.DimensionString} {SMBDXInput.Text} {SMBDYInput.Text}";
-            int error = mainControl.testInstruction(instruction);
+            int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void SCLDetailClick(object sender, RoutedEventArgs e)
         {
             string instruction = $"{Controler.LocationString} {SCLXInput.Text} {SCLYInput.Text}";
-            int error = mainControl.testInstruction(instruction);
+            int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void CMNDetailClick(object sender, RoutedEventArgs e)
         {
             string instruction = $"{Controler.CutNorth} {CMNLInput.Text}";
-            int error = mainControl.testInstruction(instruction);
+            int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void CMSDetailClick(object sender, RoutedEventArgs e)
         {
             string instruction = $"{Controler.CutSouth} {CMSLInput.Text}";
-            int error = mainControl.testInstruction(instruction);
+            int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void CMEDetailClick(object sender, RoutedEventArgs e)
         {
             string instruction = $"{Controler.CutEast} {CMELInput.Text}";
-            int error = mainControl.testInstruction(instruction);
+            int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
         private void CMWDetailClick(object sender, RoutedEventArgs e)
         {
             string instruction = $"{Controler.CutWest} {CMWLInput.Text}";
-            int error = mainControl.testInstruction(instruction);
+            int error = mainControl.TestInstruction(instruction);
             ResetInputs();
             DetailErrorHandler(error);
         }
+        //Method to draw current instructions when swapping detail page -> main app
         private void TabUpdate(object sender, RoutedEventArgs e) { Draw(); }
+
+        //initialized detail page
         private void SetupDetailWindow()
         {
             SMBDTextBlock.Text = Controler.DimensionString;
@@ -144,6 +154,8 @@ namespace MachinCuttingApp
                 $"Parameter of length. Called as: {Controler.CutWest} Length";
             ResetInputs();
         }
+        
+        //resets defaults for detail page
         private void ResetInputs()
         {
             SMBDXInput.Text = "0"; //SetMaterialBlockDimensions
@@ -155,29 +167,37 @@ namespace MachinCuttingApp
             CMELInput.Text = "0"; //CutMoveEast
             CMWLInput.Text = "0"; //CutMoveWest
         }
+
+        /*Takes input from main app page when add button is pressed.
+         * Tests for validity, updates, and throws error if any.
+         */
         private void AddInstructionClick(object sender, RoutedEventArgs e)
         {
             if (InputText.Text == "") { Draw(); return; }
             string input = InputText.Text;
             InputText.Text = "";
-            int error = mainControl.testInstruction(input);
+            //test
+            int error = mainControl.TestInstruction(input);
+            //update
             SetCurrentLocation();
             Draw();
-            fillInstrutionListbox(mainControl.getInstructions());
+            FillInstrutionListbox(mainControl.GetInstructions());
             ErrorHandler(error);
         }
 
-        private void removeInstructionClick(object sender, RoutedEventArgs e)
+        //removes instruction from listbox and re-runs all commands to verify
+        //they are still valid.
+        private void RemoveInstructionClick(object sender, RoutedEventArgs e)
         {
-            if (instructionListBox.SelectedIndex == -1) { return; }
-            int index = instructionListBox.SelectedIndex;
-            mainControl.RemoveInstruction(index);
+            if (instructionListBox.SelectedIndex == -1) { return; } //base case if nothing selected
+            mainControl.RemoveInstruction(instructionListBox.SelectedIndex);
+            //updates
             Draw();
             SetCurrentLocation();
-            fillInstrutionListbox(mainControl.getInstructions());
+            FillInstrutionListbox(mainControl.GetInstructions());
         }
 
-        private void fillInstrutionListbox(List<string> input)
+        private void FillInstrutionListbox(List<string> input)
         {
             instructionListBox.Items.Clear();
             foreach (string instruction in input)
@@ -186,10 +206,8 @@ namespace MachinCuttingApp
             }
         }
 
-        private void SetCurrentLocation()
-        {
-            currentPosition.Text = $"Location: {mainControl.locationString()}";
-        }
+        //updates textblock on main app
+        private void SetCurrentLocation() { currentPosition.Text = $"Location: {mainControl.CurrPosString()}";}
         private void Draw()
         {
             //clear children from draw area
@@ -211,7 +229,7 @@ namespace MachinCuttingApp
             double[] currPos = { 0, 0 };
 
             //get instructions from controler
-            List<string> instructions = mainControl.getInstructions();
+            List<string> instructions = mainControl.GetInstructions();
             
             //iter through instructions and draw on canvas
             for (int i = 0 ; i < instructions.Count; i++)
@@ -219,15 +237,15 @@ namespace MachinCuttingApp
                 string[] parsed = Validator.Parser(instructions[i]);
                 if (parsed[0] == Controler.DimensionString)
                 {
-                    materialDimension.Width = Validator.validateInput(parsed[1]);
-                    materialDimension.Height = Validator.validateInput(parsed[2]);
+                    materialDimension.Width = Validator.ValidateInput(parsed[1]);
+                    materialDimension.Height = Validator.ValidateInput(parsed[2]);
                     scaleX = windowSizeX / materialDimension.Width;
                     scaleY = windowSizeY / materialDimension.Height;
                 }
                 else if (parsed[0] == Controler.LocationString)
                 {
-                    currPos[0] = Validator.validateInput(parsed[1]);
-                    currPos[1] = Validator.validateInput(parsed[2]);
+                    currPos[0] = Validator.ValidateInput(parsed[1]);
+                    currPos[1] = Validator.ValidateInput(parsed[2]);
                 }
                 else if (parsed[0] == Controler.CutNorth)
                 {
@@ -239,7 +257,7 @@ namespace MachinCuttingApp
                         StrokeThickness = 0.1
                     };
                     l.X2 = l.X1;
-                    l.Y2 = l.Y1 + Validator.validateInput(parsed[1]);
+                    l.Y2 = l.Y1 + Validator.ValidateInput(parsed[1]);
                     drawArea.Children.Add(l);
                     currPos[0] = l.X2;
                     currPos[1] = l.Y2;
@@ -254,7 +272,7 @@ namespace MachinCuttingApp
                         StrokeThickness = 0.1
                     };
                     l.X2 = l.X1;
-                    l.Y2 = l.Y1 - Validator.validateInput(parsed[1]);
+                    l.Y2 = l.Y1 - Validator.ValidateInput(parsed[1]);
                     drawArea.Children.Add(l);
                     currPos[0] = l.X2;
                     currPos[1] = l.Y2;
@@ -268,7 +286,7 @@ namespace MachinCuttingApp
                         Stroke = Brushes.Black,
                         StrokeThickness = 0.1
                     };
-                    l.X2 = l.X1 + Validator.validateInput(parsed[1]);
+                    l.X2 = l.X1 + Validator.ValidateInput(parsed[1]);
                     l.Y2 = l.Y1;
                     drawArea.Children.Add(l);
                     currPos[0] = l.X2;
@@ -283,7 +301,7 @@ namespace MachinCuttingApp
                         Stroke = Brushes.Black,
                         StrokeThickness = 0.1
                     };
-                    l.X2 = l.X1 - Validator.validateInput(parsed[1]);
+                    l.X2 = l.X1 - Validator.ValidateInput(parsed[1]);
                     l.Y2 = l.Y1;
                     drawArea.Children.Add(l);
                     currPos[0] = l.X2;
@@ -302,26 +320,38 @@ namespace MachinCuttingApp
 
             foreach (Line l in drawArea.Children.OfType<Line>()) { l.RenderTransform = scale; }
 
+            DrawCrosshairs(scaleX: scaleX, scaleY: scaleY, currX: currPos[0], currY: currPos[1]);
+
+            
+        }
+
+        //draw current location as crosshairs on main app visuals
+        private void DrawCrosshairs(double scaleX, double scaleY, double currX, double currY)
+        {
+            int lineLength = 4;
             //Crosshairs for current location
             Line l1 = new Line();
-            l1.X1 = currPos[0]+4;
-            l1.Y1 = currPos[1]+4;
-            l1.X2 = currPos[0]-4;
-            l1.Y2 = currPos[1]-4;
+            l1.X1 = currX + lineLength;
+            l1.Y1 = currY + lineLength;
+            l1.X2 = currX - lineLength;
+            l1.Y2 = currY - lineLength;
             l1.Stroke = Brushes.Red;
             l1.StrokeThickness = 1.0;
 
             Line l2 = new Line();
-            l2.X1 = currPos[0]-4;
-            l2.Y1 = currPos[1]+4;
-            l2.X2 = currPos[0]+4;
-            l2.Y2 = currPos[1]-4;
+            l2.X1 = currX - lineLength;
+            l2.Y1 = currY + lineLength;
+            l2.X2 = currX + lineLength;
+            l2.Y2 = currY - lineLength;
             l2.Stroke = Brushes.Red;
             l2.StrokeThickness = 1.0;
 
-            double xloc = currPos[0] * scaleX;
-            double yloc = currPos[1] * scaleY;
-            TranslateTransform crosshairScale = new TranslateTransform(xloc-currPos[0], yloc-currPos[1] );
+            //get new location
+            double xloc = currX * Math.Min(scaleX, scaleY);
+            double yloc = currY * Math.Min(scaleX, scaleY);
+
+            //translate object to new location by subtracting current location
+            TranslateTransform crosshairScale = new TranslateTransform(xloc - currX, yloc - currY);
 
             l1.RenderTransform = crosshairScale;
             l2.RenderTransform = crosshairScale;
@@ -329,6 +359,7 @@ namespace MachinCuttingApp
             drawArea.Children.Add(l1);
             drawArea.Children.Add(l2);
         }
+
         //sets button click to fill text box and focus
         private void SetDimClick(object sender, RoutedEventArgs e)
         {

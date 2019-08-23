@@ -23,7 +23,7 @@ namespace MachinCuttingApp
          * and value is positive. Returns
          * valid parsed number or -1.
          */
-        public static int validateInput(string input)
+        public static int ValidateInput(string input)
         {
             try
             {
@@ -35,13 +35,13 @@ namespace MachinCuttingApp
                 return -1;
             }
         }
-        public static bool lowerBoundCheck(int lowerBound, int checkVal)
+        public static bool LowerBoundCheck(int lowerBound, int checkVal)
         {
             if (checkVal < lowerBound) { return false; }
             return true;
         }
 
-        public static bool boundsCheck(int lowerBound, int upperBound, int checkVal)
+        public static bool BoundsCheck(int lowerBound, int upperBound, int checkVal)
         {
             if (checkVal <= upperBound && checkVal >= lowerBound) { return true; }
             return false;

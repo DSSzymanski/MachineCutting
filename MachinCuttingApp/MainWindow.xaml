@@ -33,7 +33,7 @@
                             <Label Content="REMOVE INSTRUCTION" HorizontalAlignment="Center"/>
                             <ListBox x:Name="instructionListBox" ScrollViewer.VerticalScrollBarVisibility="Auto" 
                          HorizontalContentAlignment="Center" Height="322" FontSize="10"/>
-                            <Button x:Name="removeBttn" Click="removeInstructionClick" Content="Remove" FontSize="14"/>
+                            <Button x:Name="removeBttn" Click="RemoveInstructionClick" Content="Remove" FontSize="14"/>
                         </StackPanel>
                     </Border>
                     <Canvas Grid.Column="1" Grid.Row="0" x:Name="drawArea" Width="500" Height="500" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0, 0, 10, 0"/>
